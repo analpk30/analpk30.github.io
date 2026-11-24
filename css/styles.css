@@ -3095,3 +3095,42 @@ html[data-theme="light"] .site-header:not(.scrolled) {
             mask-composite: intersect;
   }
 }
+
+/* ==========================================================================
+   About Me: crisp text + matching colour density (both themes)
+   - The section no longer scales/fades on scroll (that made the paragraphs blur).
+   - The heavy blurred text-shadow halo is replaced by a thin, crisp one.
+   - Paragraph colour matches the rest of the page copy in each theme.
+   - Phone number added as a 4th contact channel.
+   ========================================================================== */
+.main-home #contact {
+  transform: none;
+  opacity: 1;
+  will-change: auto;
+}
+#contact .section-title,
+#contact .section-subtitle,
+#contact .academic-title,
+#contact .about-summary-desc,
+#contact .platform-heading,
+#contact .platform-link { text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5); }
+#contact .about-bullets li { color: #cbd5e1; }
+#contact .platform-link { color: #cbd5e1; }
+#contact .platform-link:hover { color: #ffffff; }
+#contact .platform-phone { color: #4ade80; }
+
+html[data-theme="light"] #contact .section-title,
+html[data-theme="light"] #contact .section-subtitle,
+html[data-theme="light"] #contact .academic-title,
+html[data-theme="light"] #contact .about-summary-desc,
+html[data-theme="light"] #contact .platform-heading,
+html[data-theme="light"] #contact .platform-link { text-shadow: none; }
+html[data-theme="light"] #contact .about-bullets li { color: #4a3019; }
+html[data-theme="light"] #contact .platform-link { color: #4a3019; }
+html[data-theme="light"] #contact .platform-link:hover { color: #c2410c; }
+html[data-theme="light"] #contact .platform-phone { color: #15803d; }
+
+.contact-panel-channels { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.5rem; }
+@media (max-width: 860px) {
+  .contact-panel-channels { grid-template-columns: 1fr; gap: 1.5rem; }
+}

@@ -786,7 +786,8 @@ function initParallax() {
   const heroSkills = heroSection ? heroSection.querySelector('.quick-skills-strip') : null;
 
   // 2. Sections cached elements (Projects, Achievements, About)
-  const sectionIds = ['projects', 'achievements', 'contact'];
+  // 'contact' (About Me) is intentionally left out: scaling/fading its long text made it look blurry.
+  const sectionIds = ['projects', 'achievements'];
   const sections = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
 
   const sectionData = sections.map(sec => ({
@@ -874,11 +875,9 @@ function initParallax() {
     // When centered in middle, section is in 100% original crisp look (scale 1.0, opacity 1.0).
     // The transition begins immediately from that point as you scroll away (no delay).
     // All cards stay strictly level in the same horizontal line without vertical shifts.
-    // Light theme: keep sections readable (higher fade floor) and treat the last
-    // section as fully in focus once the page is scrolled to the very bottom.
+    // Light theme: keep sections readable (higher fade floor).
     const isLight = document.documentElement.getAttribute('data-theme') === 'light';
     const fadeFloor = isLight ? 0.6 : 0.20;
-    const atBottom = isLight && (scrollY + vh >= document.documentElement.scrollHeight - 4);
 
     for (let i = 0; i < sectionData.length; i++) {
       const item = sectionData[i];
@@ -898,8 +897,6 @@ function initParallax() {
           dist = 0;
         }
       }
-
-      if (atBottom && i === sectionData.length - 1) dist = 0;
 
       // Only calculate if in or near viewport
       if (Math.abs(dist) < vh * 0.95 + item.height / 2) {
