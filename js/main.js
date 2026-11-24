@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initHeroVisual();
   initParallax();
   initProjectsCarousel();
+  initThemeButton();
 });
 
 /* ==========================================================================
@@ -1071,4 +1072,15 @@ function initProjectsCarousel() {
   const onChange = () => setActive(mq.matches);
   if (mq.addEventListener) mq.addEventListener('change', onChange); else if (mq.addListener) mq.addListener(onChange);
   setActive(mq.matches);
+}
+
+/* ==========================================================================
+   Theme button (placeholder: dark/light theme is not built yet)
+   ========================================================================== */
+function initThemeButton() {
+  const btn = document.getElementById('theme-toggle');
+  if (!btn) return;
+  btn.addEventListener('click', () => {
+    showToast('Dark / light theme is still in progress');
+  });
 }

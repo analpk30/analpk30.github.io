@@ -2620,3 +2620,31 @@ html.split-transition-active .split-curtain-right,
   .profile-avatar { position: static; transform: none; width: 44px; height: 44px; flex-shrink: 0; }
   .profile-avatar:hover { transform: scale(1.06); }
 }
+
+/* Theme button: far right of the bar (desktop), right of the hamburger (mobile) */
+.theme-toggle {
+  position: absolute;
+  right: 1.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--papaya-whip);
+  cursor: pointer;
+  transition: background var(--trans), border-color var(--trans), color var(--trans), box-shadow var(--trans);
+}
+.theme-toggle:hover {
+  background: rgba(102, 155, 188, 0.16);
+  border-color: var(--steel-blue);
+  box-shadow: 0 0 14px rgba(102, 155, 188, 0.3);
+}
+@media (max-width: 860px) {
+  .theme-toggle { position: static; transform: none; width: 40px; height: 40px; margin-left: 0.5rem; flex-shrink: 0; }
+}
