@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Projects | Analp Kalore</title>
+  <meta name="description" content="Projects by Analp Kalore: a deepfake detection web app, an AI compliance assistant with RAG and CI/CD, and Signalix, an AI company intelligence platform.">
+  <meta name="author" content="Analp Kalore">
+  <meta name="theme-color" content="#0c0d10">
+  <link rel="canonical" href="https://analpk30.github.io/projects.html">
+
+  <!-- Open Graph / Twitter -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://analpk30.github.io/projects.html">
+  <meta property="og:title" content="Projects | Analp Kalore">
+  <meta property="og:description" content="Projects by Analp Kalore: a deepfake detection web app, an AI compliance assistant with RAG and CI/CD, and Signalix, an AI company intelligence platform.">
+  <meta property="og:image" content="https://analpk30.github.io/assets/og-image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+
+  <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- Page Transition Flash Prevention -->
+  <script>
+    (function() {
+      try {
+        if (sessionStorage.getItem('portfolio_page_transition') === '1' || window.location.search.indexOf('transition=1') !== -1) {
+          document.documentElement.classList.add('split-transition-active');
+        }
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body>
+  <div class="screen-split-overlay" id="screen-split-overlay" aria-hidden="true">
+    <div class="split-curtain split-curtain-left"></div>
+    <div class="split-curtain split-curtain-right"></div>
+  </div>
+
+  <canvas id="bg-canvas" aria-hidden="true"></canvas>
+
+  <a href="#main" class="skip-link">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="brand-logo" aria-label="Analp Kalore Homepage">
+        <span class="brand-text">ak_portfolio</span>
+      </a>
+
+      <nav class="nav-desktop" aria-label="Main Navigation">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="projects.html" class="nav-link active">Projects</a>
+        <a href="index.html#achievements" class="nav-link">Milestones</a>
+        <a href="index.html#contact" class="nav-link">Contact</a>
+      </nav>
+
+      <button class="mobile-toggle" id="mobile-toggle" aria-label="Toggle Navigation Menu" aria-expanded="false">
+        <svg class="hamburger-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="mobile-drawer" id="mobile-drawer">
+      <a href="index.html" class="mobile-link">Home</a>
+      <a href="projects.html" class="mobile-link active">Projects</a>
+      <a href="index.html#achievements" class="mobile-link">Milestones</a>
+      <a href="index.html#contact" class="mobile-link">Contact</a>
+    </div>
+  </header>
+
+  <main class="main-content" id="main">
+    <div class="container">
+
+      <header class="page-header page-header-row">
+        <div>
+          <h1 class="page-title">Things I&rsquo;ve Built</h1>
+          <p class="page-subtitle">AI systems, cloud pipelines and backend platforms, from model to production.</p>
+        </div>
+        <a href="https://github.com/analpk30" target="_blank" rel="noopener noreferrer" class="btn btn-outline-purple btn-sm projects-gh-btn" aria-label="Analp Kalore on GitHub"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg><span>GitHub</span></a>
+      </header>
+
+      <div class="projects-stack">
+        <article class="project-card card-theme-yellow">
+          <h2 class="project-title">Deepfake Detection Web Application</h2>
+          <p class="project-desc">A deepfake detection application that takes uploaded images and videos and classifies them as authentic or manipulated, built around OpenCV preprocessing and CNN architectures.</p>
+
+          <div class="project-features">
+            <div class="features-title">Technical Highlights</div>
+            <ul class="feature-bullets">
+              <li class="bullet-yellow">Designed the detection application with OpenCV and CNN architectures, improving detection performance by 40% through data preprocessing, cleaning and statistical analysis; the final system reached 85% detection accuracy.</li>
+              <li class="bullet-yellow">Engineered an end-to-end pipeline that integrates media upload, preprocessing, feature extraction and CNN-based classification, improving detection reliability by 40% and reaching 85% accuracy on manipulated images and videos.</li>
+              <li class="bullet-yellow">Directed a team building an intuitive front-end interface, increasing user engagement by 50% and streamlining the media upload and analysis workflow.</li>
+            </ul>
+          </div>
+
+          <div class="project-tags"><span class="tag">Python</span><span class="tag">OpenCV</span><span class="tag">CNN</span><span class="tag">Computer Vision</span><span class="tag">Data Preprocessing</span><span class="tag">Statistical Analysis</span></div>
+
+          <div class="project-footer">
+            <a href="https://github.com/analpk30/Deepfake-Detection-using-Deep-Learning" target="_blank" rel="noopener noreferrer" class="btn btn-outline-purple btn-sm"><span>GitHub</span></a>
+          </div>
+        </article>
+
+        <article class="project-card card-theme-magenta">
+          <h2 class="project-title">AI Compliance Assistant Dashboard</h2>
+          <p class="project-desc">An AI compliance assistant that evaluates risk, keeps audit logs and answers regulatory questions with retrieval-augmented generation, delivered through an automated build-to-cloud pipeline.</p>
+
+          <div class="project-features">
+            <div class="features-title">Technical Highlights</div>
+            <ul class="feature-bullets">
+              <li class="bullet-magenta">Developed the AI compliance assistant with a 2-stage CI/CD workflow covering application build, testing, containerization and cloud deployment using Docker, Terraform and GitHub Actions.</li>
+              <li class="bullet-magenta">Built REST APIs and 2 real-time streaming services for risk evaluation, audit logging and anomaly detection on a modular Python backend.</li>
+              <li class="bullet-magenta">Implemented a dual-engine RAG pipeline using Gemini AI, vector search and fallback processing to retrieve regulatory information and generate context-based responses.</li>
+            </ul>
+          </div>
+
+          <div class="project-tags"><span class="tag">Python</span><span class="tag">Flask</span><span class="tag">Docker</span><span class="tag">Terraform</span><span class="tag">GitHub Actions</span><span class="tag">Gemini AI</span><span class="tag">RAG</span><span class="tag">Vector Search</span><span class="tag">REST APIs</span></div>
+
+          <div class="project-footer">
+            <a href="https://github.com/analpk30/Project-Aegis-Trade" target="_blank" rel="noopener noreferrer" class="btn btn-outline-purple btn-sm"><span>GitHub</span></a>
+          </div>
+        </article>
+
+        <article class="project-card card-theme-gold">
+          <h2 class="project-title">Signalix</h2>
+          <p class="project-desc">Signalix is an AI-powered company intelligence platform inspired by Bloomberg, Perplexity Finance, PitchBook, FinChat and AlphaSense. The MVP combines free public data sources into one provider-agnostic research dashboard for public companies.</p>
+
+          <div class="project-features">
+            <div class="features-title">MVP Scope</div>
+            <ul class="feature-bullets">
+              <li class="bullet-gold">Executive company profile.</li>
+              <li class="bullet-gold">Financial statement trends and ratios.</li>
+              <li class="bullet-gold">Stock dashboard with price and moving-average views.</li>
+              <li class="bullet-gold">AI news summary and sentiment surface.</li>
+              <li class="bullet-gold">SEC filing list prepared for a future RAG chat.</li>
+              <li class="bullet-gold">Alternative data signals for patents, hiring, search interest and macro context.</li>
+              <li class="bullet-gold">AI health score, investment thesis, risk detection and Ask AI prompts.</li>
+              <li class="bullet-gold">FastAPI backend contract designed for free API adapters first and paid providers later.</li>
+            </ul>
+          </div>
+          <div class="project-features">
+            <div class="features-title">Design Decisions</div>
+            <ul class="feature-bullets">
+              <li class="bullet-gold">Provider-agnostic adapter layer: each data source (prices, filings, news, alternative data) sits behind one interface, so free APIs can be swapped for paid providers without touching the frontend contract.</li>
+              <li class="bullet-gold">Typed Pydantic response models validate every payload at the API boundary, keeping the dashboard and the backend in sync.</li>
+              <li class="bullet-gold">Explainable AI outputs: the health score, thesis and risk flags return the factors behind them, not just a number or a paragraph.</li>
+              <li class="bullet-gold">SEC filings are structured for retrieval from the start (chunking and embeddings in pgvector or FAISS), so the Ask AI chat can later cite the exact filing passage.</li>
+              <li class="bullet-gold">Caching and background jobs (Redis, Celery or FastAPI background tasks) are planned to stay within free-tier API rate limits.</li>
+            </ul>
+          </div>
+
+          <div class="project-features"><div class="features-title">Stack</div></div>
+          <div class="project-tags"><span class="tag">Next.js</span><span class="tag">React</span><span class="tag">TypeScript</span><span class="tag">TailwindCSS</span><span class="tag">Recharts</span><span class="tag">TanStack Table</span><span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">Pydantic</span><span class="tag">Docker</span><span class="tag">GitHub Actions</span></div>
+          <div class="project-features"><div class="features-title">Roadmap</div></div>
+          <div class="project-tags"><span class="tag">SQL</span><span class="tag">Redis</span><span class="tag">pgvector / FAISS</span><span class="tag">Celery</span><span class="tag">OpenAI</span><span class="tag">LangChain</span><span class="tag">LlamaIndex</span></div>
+
+          <div class="project-footer">
+            <span class="repo-private" title="Repository is private while the project is in progress"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>Private repo</span>
+          </div>
+        </article>
+
+        <article class="project-card card-theme-purple">
+          <h2 class="project-title">MiniCloud</h2>
+          <p class="project-desc">MiniCloud is a personal developer cloud platform built incrementally on top of existing open-source infrastructure. The long-term goal is a one-command developer experience: <code>minic deploy ./my-fastapi-app</code> ends with a live HTTPS address such as <code>my-fastapi-app-a81x.apps.mycloud.dev</code>.</p>
+
+          <div class="project-features">
+            <div class="features-title">Technical Highlights</div>
+            <ul class="feature-bullets">
+              <li class="bullet-purple">Building MiniCloud, a lightweight personal developer cloud platform that deploys containerized applications to a single VPS using k3s, Traefik, wildcard DNS, and automatic HTTPS.</li>
+              <li class="bullet-purple">Designed a FastAPI-based control plane and CLI workflow to turn developer intent into Kubernetes Deployments, Services, Ingress routes, health checks, resource limits, and public application URLs.</li>
+              <li class="bullet-purple">Applied DevOps and platform-engineering practices including containerization, Kubernetes orchestration, TLS automation with cert-manager and Let&rsquo;s Encrypt, secure secret handling, and cost-efficient single-node infrastructure design.</li>
+            </ul>
+          </div>
+
+          <div class="project-tags"><span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">Kubernetes</span><span class="tag">k3s</span><span class="tag">Traefik</span><span class="tag">cert-manager</span><span class="tag">Let&rsquo;s Encrypt</span><span class="tag">Docker</span><span class="tag">In progress</span></div>
+
+          <div class="project-footer">
+            <span class="repo-private" title="Repository is private while the project is in progress"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>Private repo</span>
+          </div>
+        </article>
+
+      </div>
+
+      <section class="section-block">
+        <div class="home-cta-strip">
+          <div class="cta-strip-text">
+            <h3 class="cta-strip-code-title">Code.Deploy.Repeat</h3>
+            <p>More code, infrastructure and experiments live on my GitHub.</p>
+          </div>
+          <div>
+            <a href="https://github.com/analpk30" target="_blank" rel="noopener noreferrer" class="btn btn-outline-purple btn-sm"><span>To my GitHub</span></a>
+          </div>
+        </div>
+      </section>
+
+      <div class="back-to-top-wrap">
+        <a href="index.html" class="btn btn-outline-view-more back-to-top"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg><span>Back to Home</span></a>
+      </div>
+
+    </div>
+  </main>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
