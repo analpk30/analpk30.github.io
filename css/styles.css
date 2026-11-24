@@ -311,9 +311,7 @@ ul, ol { list-style: none; }
 .nav-desktop {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 1.75rem;
-  margin: 0 auto;
+  gap: 0.5rem;
 }
 
 .nav-link {
@@ -380,10 +378,6 @@ ul, ol { list-style: none; }
 /* Mobile toggle */
 .mobile-toggle {
   display: none;
-  position: absolute;
-  right: 1.25rem;
-  top: 50%;
-  transform: translateY(-50%);
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: var(--radius-sm);
@@ -1930,7 +1924,7 @@ ul, ol { list-style: none; }
   .hero-section-centered { min-height: auto; padding: 2.25rem 0 1.5rem; }
   .page-title       { font-size: 2.15rem; }
   .nav-desktop      { display: none; }
-  .mobile-toggle    { display: block; }
+  .mobile-toggle    { display: block; margin-left: auto; }
   .contact-layout   { grid-template-columns: 1fr; }
   .contact-unified-panel {
     padding: 0;
@@ -2592,3 +2586,37 @@ html.split-transition-active .split-curtain-right,
 /* About Me heading: centered */
 #contact .section-header-compact { justify-content: center; text-align: center; }
 #contact .section-title { white-space: normal; margin-bottom: 0; }
+
+/* Header profile avatar: circular, themed ring, sized to the 72px bar (44px photo + ring = 52px) */
+.profile-avatar {
+  position: absolute;
+  left: 1.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: block;
+  width: 52px;
+  height: 52px;
+  padding: 3px;
+  border-radius: 50%;
+  background: conic-gradient(from 200deg, var(--papaya-whip), var(--steel-blue), var(--deep-space-blue), var(--steel-blue), var(--papaya-whip));
+  box-shadow: 0 0 0 1px rgba(253, 240, 213, 0.12), 0 4px 16px rgba(0, 0, 0, 0.45), 0 0 14px rgba(102, 155, 188, 0.28);
+  transition: transform var(--trans), box-shadow var(--trans);
+}
+.profile-avatar img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center 30%;
+  border: 2px solid var(--bg-body);
+  background: var(--bg-surface);
+}
+.profile-avatar:hover {
+  transform: translateY(-50%) scale(1.06);
+  box-shadow: 0 0 0 1px rgba(253, 240, 213, 0.3), 0 6px 20px rgba(0, 0, 0, 0.5), 0 0 20px rgba(102, 155, 188, 0.45);
+}
+@media (max-width: 860px) {
+  .profile-avatar { position: static; transform: none; width: 44px; height: 44px; flex-shrink: 0; }
+  .profile-avatar:hover { transform: scale(1.06); }
+}
