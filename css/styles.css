@@ -3036,3 +3036,62 @@ html[data-theme="light"] .screen-split-overlay.is-held-closed .split-curtain-rig
             mask-composite: intersect;
   }
 }
+
+/* Light theme: stronger text contrast in Milestones + About Me (they sit over the dimmed scene) */
+html[data-theme="light"] .achieve-card-desc { color: #4a3019; }
+html[data-theme="light"] .about-bullets li { color: #3b2410; }
+html[data-theme="light"] .platform-link { color: #3b2410; }
+html[data-theme="light"] #contact .section-subtitle { color: #5e4128; }
+html[data-theme="light"] .contact-interface-wrapper::before {
+  background: radial-gradient(ellipse at center,
+    rgba(255, 244, 224, 0.92) 0%,
+    rgba(255, 244, 224, 0.75) 40%,
+    rgba(255, 244, 224, 0.35) 68%,
+    rgba(255, 244, 224, 0) 88%);
+}
+
+/* ==========================================================================
+   LIGHT THEME: no horizontal seams on the home hero
+   - Navbar is see-through at the very top (no border, blur or shadow) so the
+     hero flows straight under it; it turns into the cream glass bar on scroll.
+   - The photo also fades in from the top, so it never starts with a hard edge
+     behind the navbar.
+   ========================================================================== */
+html[data-theme="light"] .site-header:not(.scrolled) {
+  background: linear-gradient(180deg, rgba(251, 239, 217, 0.5) 0%, rgba(251, 239, 217, 0) 100%);
+  -webkit-backdrop-filter: none;
+          backdrop-filter: none;
+  border-bottom-color: transparent;
+  background-clip: padding-box;
+  box-shadow: none;
+}
+@media (min-width: 861px) {
+  html[data-theme="light"] .bg-stack .hero-visual {
+    -webkit-mask-image:
+      radial-gradient(ellipse 100% 78% at 100% 46%,
+        #000 0%, #000 34%,
+        rgba(0, 0, 0, 0.94) 44%,
+        rgba(0, 0, 0, 0.8) 54%,
+        rgba(0, 0, 0, 0.58) 64%,
+        rgba(0, 0, 0, 0.34) 74%,
+        rgba(0, 0, 0, 0.14) 84%,
+        rgba(0, 0, 0, 0.04) 92%,
+        transparent 100%),
+      linear-gradient(to bottom, #000 72%, transparent 100%),
+      linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.35) 7%, rgba(0, 0, 0, 0.8) 13%, #000 20%);
+            mask-image:
+      radial-gradient(ellipse 100% 78% at 100% 46%,
+        #000 0%, #000 34%,
+        rgba(0, 0, 0, 0.94) 44%,
+        rgba(0, 0, 0, 0.8) 54%,
+        rgba(0, 0, 0, 0.58) 64%,
+        rgba(0, 0, 0, 0.34) 74%,
+        rgba(0, 0, 0, 0.14) 84%,
+        rgba(0, 0, 0, 0.04) 92%,
+        transparent 100%),
+      linear-gradient(to bottom, #000 72%, transparent 100%),
+      linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.35) 7%, rgba(0, 0, 0, 0.8) 13%, #000 20%);
+    -webkit-mask-composite: source-in;
+            mask-composite: intersect;
+  }
+}

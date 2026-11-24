@@ -874,6 +874,12 @@ function initParallax() {
     // When centered in middle, section is in 100% original crisp look (scale 1.0, opacity 1.0).
     // The transition begins immediately from that point as you scroll away (no delay).
     // All cards stay strictly level in the same horizontal line without vertical shifts.
+    // Light theme: keep sections readable (higher fade floor) and treat the last
+    // section as fully in focus once the page is scrolled to the very bottom.
+    const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+    const fadeFloor = isLight ? 0.6 : 0.20;
+    const atBottom = isLight && (scrollY + vh >= document.documentElement.scrollHeight - 4);
+
     for (let i = 0; i < sectionData.length; i++) {
       const item = sectionData[i];
       let dist = 0;
@@ -893,6 +899,8 @@ function initParallax() {
         }
       }
 
+      if (atBottom && i === sectionData.length - 1) dist = 0;
+
       // Only calculate if in or near viewport
       if (Math.abs(dist) < vh * 0.95 + item.height / 2) {
         const absDist = Math.abs(dist);
@@ -903,7 +911,7 @@ function initParallax() {
         if (absDist > 25) {
           const norm = Math.min(1.0, (absDist - 25) / (availableHeight * 0.58));
           secScale = (1.0 - norm * 0.12).toFixed(3);
-          secOpacity = Math.max(0.20, 1.0 - norm * 0.80).toFixed(3);
+          secOpacity = Math.max(fadeFloor, 1.0 - norm * (1 - fadeFloor)).toFixed(3);
         }
 
         item.sec.style.setProperty('--section-scale', secScale);
@@ -963,7 +971,8 @@ function initHeroVisual() {
 
   function update() {
     const vh = window.innerHeight;
-    const min = window.innerWidth <= 860 ? 0.2 : 0.32;
+    const isLight = root.getAttribute('data-theme') === 'light';
+    const min = isLight ? (window.innerWidth <= 860 ? 0.12 : 0.16) : (window.innerWidth <= 860 ? 0.2 : 0.32);
     const p = Math.min(1, Math.max(0, (window.scrollY || 0) / (vh * 0.8)));
     root.style.setProperty('--hv', (1 - (1 - min) * p).toFixed(3));
     ticking = false;
@@ -972,6 +981,7 @@ function initHeroVisual() {
     if (!ticking) { ticking = true; requestAnimationFrame(update); }
   }, { passive: true });
   window.addEventListener('resize', update, { passive: true });
+  window.addEventListener('themechange', update);
   update();
 }
 
