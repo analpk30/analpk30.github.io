@@ -3130,7 +3130,20 @@ html[data-theme="light"] #contact .platform-link { color: #4a3019; }
 html[data-theme="light"] #contact .platform-link:hover { color: #c2410c; }
 html[data-theme="light"] #contact .platform-phone { color: #15803d; }
 
-.contact-panel-channels { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.5rem; }
+.contact-panel-channels {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1.25rem;
+}
+.contact-panel-channels .contact-platform-item { flex: 0 1 auto; min-width: 0; }
+.contact-panel-channels .platform-link { word-break: normal; overflow-wrap: anywhere; }
+@media (min-width: 861px) and (max-width: 1000px) {
+  .contact-panel-channels .platform-link { font-size: 0.85rem; }
+  .contact-panel-channels { gap: 1rem; }
+}
 @media (max-width: 860px) {
-  .contact-panel-channels { grid-template-columns: 1fr; gap: 1.5rem; }
+  .contact-panel-channels { flex-direction: column; gap: 1.5rem; }
 }
