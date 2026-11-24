@@ -69,7 +69,18 @@ function initAdvancedCanvas() {
       
       // Aesthetic multi-color distribution: Faded Slate/White, Ruby Red, and Warm Gold
       const rand = Math.random();
-      if (rand < 0.50) {
+      if (document.documentElement.getAttribute('data-theme') === 'light') {
+        if (rand < 0.50) {
+          this.color = { r: 120, g: 80, b: 40 };   // Warm brown
+          this.alpha = Math.random() * 0.22 + 0.16;
+        } else if (rand < 0.80) {
+          this.color = { r: 194, g: 65, b: 12 };   // Burnt orange
+          this.alpha = Math.random() * 0.25 + 0.2;
+        } else {
+          this.color = { r: 217, g: 119, b: 6 };   // Amber
+          this.alpha = Math.random() * 0.25 + 0.2;
+        }
+      } else if (rand < 0.50) {
         this.color = { r: 160, g: 168, b: 180 }; // Faded Slate Grey / White
         this.alpha = Math.random() * 0.22 + 0.12;
       } else if (rand < 0.80) {
@@ -124,6 +135,7 @@ function initAdvancedCanvas() {
   }
 
   createNodes();
+  window.addEventListener('themechange', createNodes);
 
   // Animation Loop
   function animate() {
@@ -1075,12 +1087,29 @@ function initProjectsCarousel() {
 }
 
 /* ==========================================================================
-   Theme button (placeholder: dark/light theme is not built yet)
+   Theme toggle (dark default, light = sunlit scene). Saved in localStorage.
    ========================================================================== */
 function initThemeButton() {
   const btn = document.getElementById('theme-toggle');
-  if (!btn) return;
-  btn.addEventListener('click', () => {
-    showToast('Dark / light theme is still in progress');
-  });
+  const root = document.documentElement;
+
+  function apply(theme, save) {
+    root.setAttribute('data-theme', theme);
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute('content', theme === 'light' ? '#f6e4c6' : '#0c0d10');
+    if (btn) {
+      const next = theme === 'light' ? 'dark' : 'light';
+      btn.setAttribute('aria-label', 'Switch to ' + next + ' theme');
+      btn.setAttribute('title', 'Switch to ' + next + ' theme');
+    }
+    if (save) { try { localStorage.setItem('theme', theme); } catch (e) {} }
+    window.dispatchEvent(new CustomEvent('themechange', { detail: theme }));
+  }
+
+  if (btn) {
+    apply(root.getAttribute('data-theme') === 'light' ? 'light' : 'dark', false);
+    btn.addEventListener('click', () => {
+      apply(root.getAttribute('data-theme') === 'light' ? 'dark' : 'light', true);
+    });
+  }
 }
