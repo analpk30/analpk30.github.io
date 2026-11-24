@@ -13,6 +13,8 @@ js/main.js        Page transitions, scrollspy, scroll parallax, copy-email
 assets/           desk-scene.webp (hero image), og-image.jpg, favicon.svg
 .github/workflows/deploy.yml   GitHub Pages deployment (GitHub Actions)
 .nojekyll         Serve files as-is
+robots.txt        Crawler rules + sitemap pointer
+sitemap.xml       Page list for search engines
 ```
 
 ## Local preview

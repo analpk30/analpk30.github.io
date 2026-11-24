@@ -261,7 +261,6 @@ function initScrollspy() {
   function setActive(id) {
     desktopLinks.forEach(link => {
       const href = link.getAttribute('href') || '';
-      const text = link.textContent.trim().toLowerCase();
       const isMatch = id ? href.endsWith(`#${id}`) : href.endsWith('#home');
       if (isMatch) {
         link.classList.add('active');
@@ -272,7 +271,6 @@ function initScrollspy() {
 
     mobileLinks.forEach(link => {
       const href = link.getAttribute('href') || '';
-      const text = link.textContent.trim().toLowerCase();
       const isMatch = id ? href.endsWith(`#${id}`) : href.endsWith('#home');
       if (isMatch) {
         link.classList.add('active');
@@ -769,7 +767,6 @@ function initParallax() {
 
   // 1. Hero Section cached elements
   const heroSection = document.getElementById('home');
-  const heroPill = heroSection ? heroSection.querySelector('.hero-status-pill') : null;
   const heroName = heroSection ? heroSection.querySelector('.hero-name-center') : null;
   const heroRole = heroSection ? heroSection.querySelector('.hero-role-center') : null;
   const heroBio = heroSection ? heroSection.querySelector('.hero-bio-center') : null;
@@ -849,11 +846,6 @@ function initParallax() {
           heroSkills.style.setProperty('--role-scale', roleScale);
           heroSkills.style.setProperty('--role-y', `${(p * 45).toFixed(1)}px`);
           heroSkills.style.setProperty('--role-opacity', roleOpacity);
-        }
-
-        if (heroPill) {
-          heroPill.style.transform = `translate3d(0, ${(p * 20).toFixed(1)}px, 0)`;
-          heroPill.style.opacity = Math.max(0, 1.0 - p * 1.35).toFixed(3);
         }
 
         const heroSectionOpacity = Math.max(0, 1.0 - p * 1.15).toFixed(3);

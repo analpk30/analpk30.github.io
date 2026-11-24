@@ -747,8 +747,6 @@ ul, ol { list-style: none; }
   transform: translateY(-2px);
   box-shadow: 0 4px 18px rgba(0, 48, 73, 0.55);
 }
-  box-shadow: 0 4px 18px rgba(161, 61, 99, 0.38);
-}
 
 /* Neutral Secondary Button */
 .btn-secondary {
@@ -1958,15 +1956,6 @@ ul, ol { list-style: none; }
     font-size: 0.82rem;
     padding: 0.7rem 1rem;
     text-align: center;
-  }
-
-  /* Mobile Background Video Sizing */
-  #bg-video {
-    width: 100vw;
-    height: 100vh;
-    height: 100dvh;
-    object-fit: cover;
-    opacity: 0.35;
   }
 }
 
