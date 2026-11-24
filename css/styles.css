@@ -311,7 +311,9 @@ ul, ol { list-style: none; }
 .nav-desktop {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  justify-content: center;
+  gap: 1.75rem;
+  margin: 0 auto;
 }
 
 .nav-link {
@@ -378,6 +380,10 @@ ul, ol { list-style: none; }
 /* Mobile toggle */
 .mobile-toggle {
   display: none;
+  position: absolute;
+  right: 1.25rem;
+  top: 50%;
+  transform: translateY(-50%);
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: var(--radius-sm);
@@ -1924,7 +1930,7 @@ ul, ol { list-style: none; }
   .hero-section-centered { min-height: auto; padding: 2.25rem 0 1.5rem; }
   .page-title       { font-size: 2.15rem; }
   .nav-desktop      { display: none; }
-  .mobile-toggle    { display: block; margin-left: auto; }
+  .mobile-toggle    { display: block; }
   .contact-layout   { grid-template-columns: 1fr; }
   .contact-unified-panel {
     padding: 0;
@@ -2524,6 +2530,56 @@ html.split-transition-active .split-curtain-right,
   background: rgba(255, 255, 255, 0.07);
   color: var(--text-main);
 }
+
+/* ==========================================================================
+   Projects carousel: workspace-switch animation (hover devices, wide screens)
+   3 cards visible, the 4th waits off-screen and rotates in while hovering
+   ========================================================================== */
+.projects-dots { display: none; }
+
+.projects-viewport.is-carousel {
+  overflow: hidden;
+  padding: 10px 0;
+  margin: -10px 0 0;
+}
+.projects-viewport.is-carousel .home-projects-grid {
+  display: flex;
+  gap: 1.25rem;
+  will-change: transform;
+}
+.projects-viewport.is-carousel .home-project-card {
+  flex: 0 0 calc((100% - 2.5rem) / 3);
+  transition: transform 0.9s cubic-bezier(0.65, 0, 0.35, 1), opacity 0.9s ease, filter 0.9s ease,
+              border-color var(--trans), box-shadow var(--trans);
+}
+.projects-viewport.is-carousel .home-project-card.is-queued {
+  opacity: 0.3;
+  transform: scale(0.93);
+}
+.projects-viewport.is-carousel .home-project-card.is-leaving {
+  opacity: 0.18;
+  transform: scale(0.92);
+  filter: blur(1.5px);
+}
+
+.projects-viewport.is-carousel + .projects-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.7rem;
+  margin: 0.15rem 0 1rem;
+}
+.projects-dot {
+  width: 10px;
+  height: 10px;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(253, 240, 213, 0.55);
+  background: transparent;
+  cursor: pointer;
+  transition: background 0.5s ease, transform 0.5s ease, border-color 0.5s ease;
+}
+.projects-dot:hover { border-color: var(--papaya-whip); transform: scale(1.25); }
+.projects-dot.is-on { background: var(--papaya-whip); border-color: var(--papaya-whip); }
 
 /* Purple theme for the project page card + bullet */
 .card-theme-purple:hover { border-color: var(--purple); box-shadow: 0 8px 30px rgba(139, 92, 246, 0.18); transform: translateY(-2px); }
