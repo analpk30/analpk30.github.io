@@ -3345,51 +3345,54 @@ html.has-custom-cursor * { cursor: none !important; }
 
 /* ==========================================================================
    CUSTOM SCROLLBAR: line + end dots + diamond thumb with chevrons
+   Compact (half size), dimmed, hugging the right edge so it never crowds the page.
    Light strokes on the dark theme, dark-brown strokes on the light theme.
    ========================================================================== */
 .sb {
   --sb-ink: #e5e7eb;
   --sb-fill: #0c0d10;
   position: fixed;
-  right: 6px;
+  right: 1px;
   top: calc(var(--header-height) + 14px);
   bottom: 14px;
-  width: 30px;
+  width: 16px;
   z-index: 90;
   pointer-events: none;
   color: var(--sb-ink);
-  transition: opacity 0.25s ease;
+  opacity: 0.42;
+  transition: opacity 0.3s ease;
 }
 html[data-theme="light"] .sb {
   --sb-ink: #2a1608;
   --sb-fill: #f6e4c6;
 }
+.sb:hover,
+.sb.is-dragging { opacity: 0.9; }
 .sb.is-hidden { opacity: 0; visibility: hidden; }
 
 .sb-rail {
   position: absolute;
   inset: 0;
   left: 50%;
-  width: 18px;
+  width: 14px;
   transform: translateX(-50%);
   pointer-events: auto;
 }
 .sb-line {
   position: absolute;
   left: 50%;
-  top: 4px;
-  bottom: 4px;
-  width: 1.5px;
+  top: 2px;
+  bottom: 2px;
+  width: 1px;
   transform: translateX(-50%);
   background: var(--sb-ink);
-  opacity: 0.85;
 }
 .sb-dot {
   position: absolute;
   left: 50%;
-  width: 8px;
-  height: 8px;
-  margin-left: -4px;
+  width: 4px;
+  height: 4px;
+  margin-left: -2px;
   border-radius: 50%;
   background: var(--sb-ink);
 }
@@ -3400,26 +3403,20 @@ html[data-theme="light"] .sb {
   position: absolute;
   top: 0;
   left: 50%;
-  width: 30px;
-  height: 30px;
-  margin-left: -15px;
+  width: 15px;
+  height: 15px;
+  margin-left: -7.5px;
   color: var(--sb-ink);
   pointer-events: auto;
   touch-action: none;
   will-change: transform;
 }
-.sb-thumb svg { display: block; overflow: visible; }
+.sb-thumb svg { display: block; overflow: visible; width: 15px; height: 15px; stroke-width: 2.6; }
 .sb-thumb .sb-diamond { fill: var(--sb-fill); }
 .sb-thumb:hover svg,
-.sb.is-dragging .sb-thumb svg { stroke-width: 1.7; }
+.sb.is-dragging .sb-thumb svg { stroke-width: 3.2; }
 
 /* Replace the native scrollbar only when the custom one is running */
 html.has-custom-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
 html.has-custom-scrollbar::-webkit-scrollbar,
 html.has-custom-scrollbar body::-webkit-scrollbar { width: 0; height: 0; display: none; }
-
-@media (max-width: 860px) {
-  .sb { width: 24px; right: 2px; }
-  .sb-thumb { width: 26px; height: 26px; margin-left: -13px; }
-  .sb-thumb svg { width: 26px; height: 26px; }
-}
