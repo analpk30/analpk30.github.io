@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initProjectsCarousel();
   initThemeButton();
   initCustomCursor();
-  initCustomScrollbar();
+  initScrollDots();
 });
 
 /* ==========================================================================
@@ -274,6 +274,7 @@ function initScrollspy() {
   }
 
   function setActive(id) {
+    window.dispatchEvent(new CustomEvent('spychange', { detail: id || 'home' }));
     desktopLinks.forEach(link => {
       const href = link.getAttribute('href') || '';
       const isMatch = id ? href.endsWith(`#${id}`) : href.endsWith('#home');
@@ -1148,7 +1149,7 @@ function initCustomCursor() {
   let started = false;
   let raf = null;
 
-  const INTERACTIVE = 'a, button, [role="button"], summary, label, input, select, textarea, .projects-dot, .sb-thumb, .sb-rail';
+  const INTERACTIVE = 'a, button, [role="button"], summary, label, input, select, textarea, .projects-dot, .scroll-dot';
 
   function frame() {
     rx += (mx - rx) * ease;
@@ -1193,85 +1194,65 @@ function initCustomCursor() {
 }
 
 /* ==========================================================================
-   Custom scrollbar: thin line with end dots and a diamond thumb (chevrons)
-   - native scrollbar is hidden only once this is running
-   - thumb tracks scroll progress; drag the thumb or click the line to jump
+   Side dots: one minimalist dot per page / section, on the left edge.
+   - mirrors the navbar links (same labels and targets)
+   - the current page's dot and the hovered dot magnify 30% (dock-style spring)
+   - on index.html the current dot follows the scroll position
    ========================================================================== */
-function initCustomScrollbar() {
-  const root = document.documentElement;
-  const sb = document.createElement('div');
-  sb.className = 'sb';
-  sb.innerHTML =
-    '<div class="sb-rail" aria-hidden="true">' +
-      '<span class="sb-dot sb-dot-top"></span>' +
-      '<span class="sb-line"></span>' +
-      '<span class="sb-dot sb-dot-bottom"></span>' +
-    '</div>' +
-    '<div class="sb-thumb" aria-hidden="true">' +
-      '<svg viewBox="0 0 30 30" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">' +
-        '<path class="sb-diamond" d="M15 1 L29 15 L15 29 L1 15 Z"/>' +
-        '<path d="M1 15 H29"/>' +
-        '<path d="M9.4 9.6 L15 4.2 L20.6 9.6"/>' +
-        '<path d="M9.4 20.4 L15 25.8 L20.6 20.4"/>' +
-      '</svg>' +
-    '</div>';
-  document.body.appendChild(sb);
-  const rail = sb.querySelector('.sb-rail');
-  const thumb = sb.querySelector('.sb-thumb');
+function initScrollDots() {
+  const links = Array.from(document.querySelectorAll('.nav-desktop .nav-link'));
+  if (!links.length) return;
 
-  let dragging = false;
-  let raf = null;
+  const onIndex = Boolean(document.getElementById('home'));
+  const keyOf = (href) => {
+    const h = href.indexOf('#');
+    if (h !== -1) return href.slice(h + 1);
+    return /projects\.html$/.test(href) ? 'projects-page' : 'home';
+  };
 
-  function maxScroll() {
-    return Math.max(0, root.scrollHeight - window.innerHeight);
+  const nav = document.createElement('nav');
+  nav.className = 'scroll-dots';
+  nav.setAttribute('aria-label', 'Page sections');
+
+  const dots = links.map((link) => {
+    const raw = link.getAttribute('href') || '#home';
+    const key = keyOf(raw);
+    const a = document.createElement('a');
+    a.className = 'scroll-dot';
+    a.dataset.key = key;
+    a.dataset.label = link.textContent.trim();
+    a.setAttribute('aria-label', 'Go to ' + a.dataset.label);
+    // Home on a sub page must land at the top of index.html
+    a.href = (!onIndex && key === 'home') ? 'index.html#home' : raw;
+    if (link.classList.contains('active')) a.classList.add('is-active');
+    nav.appendChild(a);
+    return a;
+  });
+  document.body.appendChild(nav);
+
+  function setCurrent(key) {
+    dots.forEach((d) => {
+      const on = d.dataset.key === key;
+      d.classList.toggle('is-active', on);
+      if (on) d.setAttribute('aria-current', 'true'); else d.removeAttribute('aria-current');
+    });
   }
+  const initial = links.find((l) => l.classList.contains('active'));
+  setCurrent(initial ? keyOf(initial.getAttribute('href') || '#home') : 'home');
+  window.addEventListener('spychange', (e) => setCurrent(e.detail));
 
-  function update() {
-    raf = null;
-    const max = maxScroll();
-    const scrollable = max > 4;
-    sb.classList.toggle('is-hidden', !scrollable);
-    root.classList.toggle('has-custom-scrollbar', scrollable);
-    if (!scrollable) return;
-    const railH = rail.clientHeight;
-    const thumbH = thumb.offsetHeight;
-    const p = Math.min(1, Math.max(0, (window.scrollY || root.scrollTop || 0) / max));
-    thumb.style.transform = 'translate3d(0,' + (p * (railH - thumbH)).toFixed(1) + 'px,0)';
-  }
-  function queue() { if (raf === null) raf = requestAnimationFrame(update); }
-
-  window.addEventListener('scroll', queue, { passive: true });
-  window.addEventListener('resize', queue, { passive: true });
-  window.addEventListener('load', queue);
-  if ('ResizeObserver' in window) new ResizeObserver(queue).observe(document.body);
-
-  function scrollToPointer(clientY, smooth) {
-    const r = rail.getBoundingClientRect();
-    const thumbH = thumb.offsetHeight;
-    const usable = Math.max(1, r.height - thumbH);
-    const p = Math.min(1, Math.max(0, (clientY - r.top - thumbH / 2) / usable));
-    window.scrollTo({ top: p * maxScroll(), behavior: smooth ? 'smooth' : 'instant' });
-  }
-
-  thumb.addEventListener('pointerdown', (e) => {
-    dragging = true;
-    sb.classList.add('is-dragging');
-    thumb.setPointerCapture(e.pointerId);
+  // Same-page jumps (index.html): centre the section like the navbar does
+  nav.addEventListener('click', (e) => {
+    const a = e.target.closest('.scroll-dot');
+    if (!a) return;
+    const href = a.getAttribute('href') || '';
+    if (!href.startsWith('#')) return; // cross-page links are handled by the page transition
     e.preventDefault();
+    const id = href.slice(1);
+    const target = document.getElementById(id);
+    if (!target) return;
+    if (id === 'home') window.scrollTo({ top: 0, behavior: 'smooth' });
+    else scrollToSectionMiddle(target);
+    try { history.pushState(null, '', href); } catch (err) {}
   });
-  thumb.addEventListener('pointermove', (e) => {
-    if (dragging) scrollToPointer(e.clientY, false);
-  });
-  function endDrag(e) {
-    if (!dragging) return;
-    dragging = false;
-    sb.classList.remove('is-dragging');
-    try { thumb.releasePointerCapture(e.pointerId); } catch (err) {}
-  }
-  thumb.addEventListener('pointerup', endDrag);
-  thumb.addEventListener('pointercancel', endDrag);
-
-  rail.addEventListener('click', (e) => scrollToPointer(e.clientY, true));
-
-  update();
 }
