@@ -3426,3 +3426,8 @@ html[data-theme="light"] .scroll-dots { --dn-ink: #2a1608; }
 @media (max-width: 600px) {
   .scroll-dots { left: 3px; }
 }
+
+
+/* Typewriter cursor for the hero role line */
+.hero-role-center .Typewriter__cursor { color: #62BBC1; margin-left: 1px; }
+html[data-theme="light"] .hero-role-center .Typewriter__cursor { color: #c2410c; }

@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initThemeButton();
   initCustomCursor();
   initScrollDots();
+  initRoleTypewriter();
 });
 
 /* ==========================================================================
@@ -1255,4 +1256,31 @@ function initScrollDots() {
     else scrollToSectionMiddle(target);
     try { history.pushState(null, '', href); } catch (err) {}
   });
+}
+
+/* ==========================================================================
+   Hero role line: typewriter effect (typewriter-effect library, home page only)
+   - full text stays in aria-label for screen readers
+   - skipped when the library is missing or the visitor prefers reduced motion
+   ========================================================================== */
+function initRoleTypewriter() {
+  const host = document.querySelector('#hero-role .role-typed');
+  if (!host || typeof window.Typewriter !== 'function') return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const html = host.innerHTML;
+  const line = host.parentElement;
+  // Keep the line's height while it is being typed so nothing below jumps
+  line.style.minHeight = line.offsetHeight + 'px';
+  host.innerHTML = '';
+
+  new window.Typewriter(host, {
+    delay: 55,
+    cursor: '\u258D',
+    loop: false,
+    autoStart: false
+  })
+    .pauseFor(500)
+    .typeString(html)
+    .start();
 }
