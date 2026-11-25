@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initProjectsCarousel();
   initThemeButton();
   initCustomCursor();
+  initCustomScrollbar();
 });
 
 /* ==========================================================================
@@ -1147,7 +1148,7 @@ function initCustomCursor() {
   let started = false;
   let raf = null;
 
-  const INTERACTIVE = 'a, button, [role="button"], summary, label, input, select, textarea, .projects-dot';
+  const INTERACTIVE = 'a, button, [role="button"], summary, label, input, select, textarea, .projects-dot, .sb-thumb, .sb-rail';
 
   function frame() {
     rx += (mx - rx) * ease;
@@ -1189,4 +1190,88 @@ function initCustomCursor() {
   document.documentElement.addEventListener('mouseenter', () => {
     if (started) { dot.classList.add('is-visible'); ring.classList.add('is-visible'); }
   });
+}
+
+/* ==========================================================================
+   Custom scrollbar: thin line with end dots and a diamond thumb (chevrons)
+   - native scrollbar is hidden only once this is running
+   - thumb tracks scroll progress; drag the thumb or click the line to jump
+   ========================================================================== */
+function initCustomScrollbar() {
+  const root = document.documentElement;
+  const sb = document.createElement('div');
+  sb.className = 'sb';
+  sb.innerHTML =
+    '<div class="sb-rail" aria-hidden="true">' +
+      '<span class="sb-dot sb-dot-top"></span>' +
+      '<span class="sb-line"></span>' +
+      '<span class="sb-dot sb-dot-bottom"></span>' +
+    '</div>' +
+    '<div class="sb-thumb" aria-hidden="true">' +
+      '<svg viewBox="0 0 30 30" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">' +
+        '<path class="sb-diamond" d="M15 1 L29 15 L15 29 L1 15 Z"/>' +
+        '<path d="M1 15 H29"/>' +
+        '<path d="M9.4 9.6 L15 4.2 L20.6 9.6"/>' +
+        '<path d="M9.4 20.4 L15 25.8 L20.6 20.4"/>' +
+      '</svg>' +
+    '</div>';
+  document.body.appendChild(sb);
+  const rail = sb.querySelector('.sb-rail');
+  const thumb = sb.querySelector('.sb-thumb');
+
+  let dragging = false;
+  let raf = null;
+
+  function maxScroll() {
+    return Math.max(0, root.scrollHeight - window.innerHeight);
+  }
+
+  function update() {
+    raf = null;
+    const max = maxScroll();
+    const scrollable = max > 4;
+    sb.classList.toggle('is-hidden', !scrollable);
+    root.classList.toggle('has-custom-scrollbar', scrollable);
+    if (!scrollable) return;
+    const railH = rail.clientHeight;
+    const thumbH = thumb.offsetHeight;
+    const p = Math.min(1, Math.max(0, (window.scrollY || root.scrollTop || 0) / max));
+    thumb.style.transform = 'translate3d(0,' + (p * (railH - thumbH)).toFixed(1) + 'px,0)';
+  }
+  function queue() { if (raf === null) raf = requestAnimationFrame(update); }
+
+  window.addEventListener('scroll', queue, { passive: true });
+  window.addEventListener('resize', queue, { passive: true });
+  window.addEventListener('load', queue);
+  if ('ResizeObserver' in window) new ResizeObserver(queue).observe(document.body);
+
+  function scrollToPointer(clientY, smooth) {
+    const r = rail.getBoundingClientRect();
+    const thumbH = thumb.offsetHeight;
+    const usable = Math.max(1, r.height - thumbH);
+    const p = Math.min(1, Math.max(0, (clientY - r.top - thumbH / 2) / usable));
+    window.scrollTo({ top: p * maxScroll(), behavior: smooth ? 'smooth' : 'instant' });
+  }
+
+  thumb.addEventListener('pointerdown', (e) => {
+    dragging = true;
+    sb.classList.add('is-dragging');
+    thumb.setPointerCapture(e.pointerId);
+    e.preventDefault();
+  });
+  thumb.addEventListener('pointermove', (e) => {
+    if (dragging) scrollToPointer(e.clientY, false);
+  });
+  function endDrag(e) {
+    if (!dragging) return;
+    dragging = false;
+    sb.classList.remove('is-dragging');
+    try { thumb.releasePointerCapture(e.pointerId); } catch (err) {}
+  }
+  thumb.addEventListener('pointerup', endDrag);
+  thumb.addEventListener('pointercancel', endDrag);
+
+  rail.addEventListener('click', (e) => scrollToPointer(e.clientY, true));
+
+  update();
 }
