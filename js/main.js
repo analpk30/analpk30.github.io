@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initParallax();
   initProjectsCarousel();
   initThemeButton();
+  initCustomCursor();
 });
 
 /* ==========================================================================
@@ -1119,4 +1120,73 @@ function initThemeButton() {
       apply(root.getAttribute('data-theme') === 'light' ? 'dark' : 'light', true);
     });
   }
+}
+
+/* ==========================================================================
+   Custom cursor: small dot + trailing ring (mouse / trackpad only)
+   - dot sticks to the pointer, ring follows with a smooth lag
+   - ring grows over links/buttons and shrinks while pressed
+   - colour follows the theme via CSS (light on dark, dark on light)
+   ========================================================================== */
+function initCustomCursor() {
+  if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const ease = reduce ? 1 : 0.16;
+
+  const dot = document.createElement('div');
+  dot.className = 'cursor-dot';
+  const ring = document.createElement('div');
+  ring.className = 'cursor-ring';
+  dot.setAttribute('aria-hidden', 'true');
+  ring.setAttribute('aria-hidden', 'true');
+  document.body.append(ring, dot);
+
+  let mx = -100, my = -100;   // pointer
+  let rx = -100, ry = -100;   // ring (lagging)
+  let started = false;
+  let raf = null;
+
+  const INTERACTIVE = 'a, button, [role="button"], summary, label, input, select, textarea, .projects-dot';
+
+  function frame() {
+    rx += (mx - rx) * ease;
+    ry += (my - ry) * ease;
+    dot.style.transform = 'translate3d(' + mx + 'px,' + my + 'px,0)';
+    ring.style.transform = 'translate3d(' + rx + 'px,' + ry + 'px,0)';
+    if (Math.abs(mx - rx) > 0.1 || Math.abs(my - ry) > 0.1) {
+      raf = requestAnimationFrame(frame);
+    } else {
+      rx = mx; ry = my;
+      ring.style.transform = 'translate3d(' + rx + 'px,' + ry + 'px,0)';
+      raf = null;
+    }
+  }
+  function kick() { if (raf === null) raf = requestAnimationFrame(frame); }
+
+  window.addEventListener('mousemove', (e) => {
+    mx = e.clientX; my = e.clientY;
+    if (!started) {
+      started = true;
+      rx = mx; ry = my;                 // no fly-in from the corner on first move
+      document.documentElement.classList.add('has-custom-cursor');
+      dot.classList.add('is-visible');
+      ring.classList.add('is-visible');
+    }
+    kick();
+  }, { passive: true });
+
+  document.addEventListener('mouseover', (e) => {
+    ring.classList.toggle('is-hover', Boolean(e.target.closest && e.target.closest(INTERACTIVE)));
+  });
+  document.addEventListener('mousedown', () => ring.classList.add('is-down'));
+  document.addEventListener('mouseup', () => ring.classList.remove('is-down'));
+
+  document.documentElement.addEventListener('mouseleave', () => {
+    dot.classList.remove('is-visible');
+    ring.classList.remove('is-visible');
+  });
+  document.documentElement.addEventListener('mouseenter', () => {
+    if (started) { dot.classList.add('is-visible'); ring.classList.add('is-visible'); }
+  });
 }

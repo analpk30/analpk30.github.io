@@ -3285,3 +3285,59 @@ html[data-theme="light"] .system-row:hover .system-name { color: #c2410c; }
 #system .system-pct { text-shadow: none; }
 .system-panel { background: rgba(14, 16, 20, 0.82); }
 html[data-theme="light"] .system-panel { background: rgba(255, 250, 240, 0.9); }
+
+
+/* ==========================================================================
+   CUSTOM CURSOR: dot + trailing ring (light on dark theme, dark on light theme)
+   Sized like a system cursor. Only active once JS adds .has-custom-cursor.
+   ========================================================================== */
+.cursor-dot,
+.cursor-ring {
+  --cur: #f5f5f5;
+  --cur-edge: rgba(0, 0, 0, 0.35);
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 2147483000;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  will-change: transform;
+}
+html[data-theme="light"] .cursor-dot,
+html[data-theme="light"] .cursor-ring {
+  --cur: #1a0f06;
+  --cur-edge: rgba(255, 255, 255, 0.55);
+}
+.cursor-dot.is-visible,
+.cursor-ring.is-visible { opacity: 1; }
+
+.cursor-dot {
+  width: 5px;
+  height: 5px;
+  margin: -2.5px 0 0 -2.5px;
+  border-radius: 50%;
+  background: var(--cur);
+  box-shadow: 0 0 0 1px var(--cur-edge);
+}
+.cursor-ring {
+  width: 22px;
+  height: 22px;
+  margin: -11px 0 0 -11px;
+  border-radius: 50%;
+  border: 1.5px solid var(--cur);
+  box-shadow: 0 0 0 1px var(--cur-edge);
+  scale: 1;
+  transition: opacity 0.2s ease, scale 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.cursor-ring.is-hover { scale: 1.55; }
+.cursor-ring.is-down { scale: 0.8; }
+.cursor-ring.is-hover.is-down { scale: 1.2; }
+
+/* Hide the system arrow only when the custom cursor is running */
+html.has-custom-cursor,
+html.has-custom-cursor * { cursor: none !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor-ring { transition: opacity 0.2s ease; }
+}
