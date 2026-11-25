@@ -786,8 +786,8 @@ function initParallax() {
   const heroSkills = heroSection ? heroSection.querySelector('.quick-skills-strip') : null;
 
   // 2. Sections cached elements (Projects, Achievements, About)
-  // 'contact' (About Me) is intentionally left out: scaling/fading its long text made it look blurry.
-  const sectionIds = ['projects', 'system', 'achievements'];
+  // 'system' and 'contact' (Overview) are intentionally left out: scaling/fading their text made it look dim and blurry.
+  const sectionIds = ['projects', 'achievements'];
   const sections = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
 
   const sectionData = sections.map(sec => ({

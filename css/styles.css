@@ -2579,11 +2579,11 @@ html.split-transition-active .split-curtain-right,
 .card-theme-purple:hover { border-color: var(--purple); box-shadow: 0 8px 30px rgba(139, 92, 246, 0.18); transform: translateY(-2px); }
 .bullet-purple::before { color: var(--purple); }
 
-/* Private repo marker + milestone link */
+/* Private repo marker + accomplishment link */
 .repo-private { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 8px; font-size: 0.78rem; font-weight: 600; color: rgba(253,240,213,0.55); border: 1px dashed rgba(253,240,213,0.28); cursor: default; user-select: none; }
 .achieve-link { margin-top: 16px; align-self: flex-start; }
 
-/* About Me heading: centered */
+/* Overview heading: centered */
 #contact .section-header-compact { justify-content: center; text-align: center; }
 #contact .section-title { white-space: normal; margin-bottom: 0; }
 
@@ -2820,7 +2820,7 @@ html[data-theme="light"] .cta-strip-text h3 { color: #2a1608 !important; }
 html[data-theme="light"] .section-subtitle,
 html[data-theme="light"] .page-subtitle { color: #7a5a3a; }
 
-/* ── Cards (home projects, milestones, project page) ── */
+/* ── Cards (home projects, accomplishments, project page) ── */
 html[data-theme="light"] .home-project-card,
 html[data-theme="light"] .main-home .home-project-card,
 html[data-theme="light"] .achievement-card,
@@ -2918,7 +2918,7 @@ html[data-theme="light"] .card-theme-purple .tag {
   border: 1px solid rgba(109, 40, 217, 0.34) !important;
 }
 
-/* Milestone badges + icons */
+/* Accomplishment badges + icons */
 html[data-theme="light"] .badge-cyan,
 html[data-theme="light"] .badge-dsa,
 html[data-theme="light"] .badge-blue,
@@ -3037,7 +3037,7 @@ html[data-theme="light"] .screen-split-overlay.is-held-closed .split-curtain-rig
   }
 }
 
-/* Light theme: stronger text contrast in Milestones + About Me (they sit over the dimmed scene) */
+/* Light theme: stronger text contrast in Accomplishments + Overview (they sit over the dimmed scene) */
 html[data-theme="light"] .achieve-card-desc { color: #4a3019; }
 html[data-theme="light"] .about-bullets li { color: #3b2410; }
 html[data-theme="light"] .platform-link { color: #3b2410; }
@@ -3097,7 +3097,7 @@ html[data-theme="light"] .site-header:not(.scrolled) {
 }
 
 /* ==========================================================================
-   About Me: crisp text + matching colour density (both themes)
+   Overview: crisp text + matching colour density (both themes)
    - The section no longer scales/fades on scroll (that made the paragraphs blur).
    - The heavy blurred text-shadow halo is replaced by a thin, crisp one.
    - Paragraph colour matches the rest of the page copy in each theme.
@@ -3271,3 +3271,17 @@ html[data-theme="light"] .system-row:hover .system-name { color: #c2410c; }
 @media (max-width: 600px) {
   html[data-theme="light"] .system-col { border-left: 0; }
 }
+
+
+/* System: same treatment as Overview, so it stays crisp and at full strength (no scroll scale/fade) */
+.main-home #system {
+  transform: none;
+  opacity: 1;
+  will-change: auto;
+}
+#system .system-eyebrow,
+#system .system-col-title,
+#system .system-name,
+#system .system-pct { text-shadow: none; }
+.system-panel { background: rgba(14, 16, 20, 0.82); }
+html[data-theme="light"] .system-panel { background: rgba(255, 250, 240, 0.9); }
