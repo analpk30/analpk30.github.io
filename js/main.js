@@ -233,7 +233,7 @@ function getElementDocTop(el) {
    Dynamically shifts active shade between section links on scroll
    ========================================================================== */
 function initScrollspy() {
-  const sectionIds = ['projects', 'achievements', 'contact'];
+  const sectionIds = ['projects', 'system', 'achievements', 'contact'];
   const sections = sectionIds
     .map(id => document.getElementById(id))
     .filter(Boolean);
@@ -787,7 +787,7 @@ function initParallax() {
 
   // 2. Sections cached elements (Projects, Achievements, About)
   // 'contact' (About Me) is intentionally left out: scaling/fading its long text made it look blurry.
-  const sectionIds = ['projects', 'achievements'];
+  const sectionIds = ['projects', 'system', 'achievements'];
   const sections = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
 
   const sectionData = sections.map(sec => ({
