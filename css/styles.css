@@ -3147,3 +3147,40 @@ html[data-theme="light"] #contact .platform-phone { color: #15803d; }
 @media (max-width: 860px) {
   .contact-panel-channels { flex-direction: column; gap: 1.5rem; }
 }
+
+
+/* ==========================================================================
+   Header logo (replaces the profile photo): no frame, the logo's own ring is the edge.
+   dark-logo is used in the dark theme, light-logo in the light theme.
+   ========================================================================== */
+.profile-avatar,
+html[data-theme="light"] .profile-avatar {
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  background: none;
+  border: 0;
+  border-radius: 50%;
+  box-shadow: none;
+}
+.profile-avatar img,
+html[data-theme="light"] .profile-avatar img {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  object-fit: contain;
+  object-position: center;
+}
+.profile-avatar .logo-light { display: none; }
+html[data-theme="light"] .profile-avatar .logo-dark { display: none; }
+html[data-theme="light"] .profile-avatar .logo-light { display: block; }
+.profile-avatar:hover,
+html[data-theme="light"] .profile-avatar:hover { box-shadow: none; transform: translateY(-50%) scale(1.06); }
+@media (max-width: 860px) {
+  .profile-avatar,
+  html[data-theme="light"] .profile-avatar { width: 44px; height: 44px; }
+  .profile-avatar:hover,
+  html[data-theme="light"] .profile-avatar:hover { transform: scale(1.06); }
+}
